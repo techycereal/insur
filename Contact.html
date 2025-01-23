@@ -195,8 +195,6 @@ const messageInput = document.getElementById('message');
 
 // Form submission handler
 async function handleSubmit(event) {
-  event.preventDefault();
-
   // Basic validation
   if (!nameInput.value || !emailInput.value || !messageInput.value) {
     alert('Please fill out all fields');
