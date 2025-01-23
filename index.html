@@ -182,42 +182,54 @@ document.addEventListener('click', (e) => {
 
 
     //email js
-    (function () {
-  // Correctly pass the public key
-  emailjs.init("mqWImFyfIz-H8jZ7p");
-})();
+    const EMAIL_JS_USER_ID = 'mqWImFyfIz-H8jZ7p'; // Replace with your EmailJS user ID
+const EMAIL_JS_SERVICE_ID = 'contact_form'; // Replace with your EmailJS service ID
+const EMAIL_JS_TEMPLATE_ID = 'template_r2hiv58'; // Replace with your EmailJS email template ID
 
-// Dropdown logic for closing menus (ensure these variables are defined elsewhere)
-document.addEventListener("click", (e) => {
-  if (
-    typeof isDesktop !== "undefined" &&
-    !isDesktop.matches &&
-    !e.target.closest(".dropdown-link") &&
-    !e.target.closest(".dropdown-menu")
-  ) {
-    dropdownMenus.forEach((menu) => hideDropdown(menu));
-    dropdownStates.forEach((state) => (state.isOpen = false));
-  }
-});
+emailjs.init(EMAIL_JS_USER_ID);
+
+// Select form and input elements
+const form = document.getElementById('contact_form');
+const nameInput = document.getElementById('name');
+const emailInput = document.getElementById('email');
+const messageInput = document.getElementById('message');
 
 // Form submission handler
-window.onload = function () {
-  document.getElementById("contact_form").addEventListener("submit", function (event) {
-    event.preventDefault();
+async function handleSubmit(event) {
+  event.preventDefault();
 
-    // Use the correct Service ID and Template ID
-    emailjs
-      .sendForm("contact_service", "contact_form", this)
-      .then(
-        () => {
-          console.log("SUCCESS!");
-        },
-        (error) => {
-          console.log("FAILED...", error);
-        }
-      );
-  });
-};
+  // Basic validation
+  if (!nameInput.value || !emailInput.value || !messageInput.value) {
+    alert('Please fill out all fields');
+    return;
+  }
+
+  try {
+    // Send email using EmailJS
+    const response = await emailjs.send(
+      EMAIL_JS_SERVICE_ID, 
+      EMAIL_JS_TEMPLATE_ID, 
+      {
+        from_name: nameInput.value,
+        from_email: emailInput.value,
+        message: messageInput.value
+      }
+    );
+
+    // Success message
+    alert('Message sent successfully!');
+    
+    // Reset form
+    form.reset();
+  } catch (error) {
+    // Error handling
+    console.error('Failed to send email:', error);
+    alert('Failed to send message. Please try again.');
+  }
+}
+
+// Add submit event listener to form
+form.addEventListener('submit', handleSubmit);
 });
                 undefined
             </script>
