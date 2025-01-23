@@ -5,10 +5,6 @@
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>Services</title>
             <script src="https://cdn.tailwindcss.com"></script>
-            <script
-  type="text/javascript"
-  src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-</script>
             
     <style>
     h1 {
@@ -175,29 +171,51 @@ isDesktop.addEventListener('change', (e) => {
 });
 
 // Close dropdowns when clicking outside (mobile only)
-(function() {
-            // https://dashboard.emailjs.com/admin/account
-            emailjs.init({
-              publicKey: "mqWImFyfIz-H8jZ7p",
-            });
-        })();
 document.addEventListener('click', (e) => {
     if (!isDesktop.matches && !e.target.closest('.dropdown-link') && !e.target.closest('.dropdown-menu')) {
         dropdownMenus.forEach(menu => hideDropdown(menu));
         dropdownStates.forEach(state => state.isOpen = false);
     }
-        window.onload = function() {
-            document.getElementById('contact-form').addEventListener('submit', function(event) {
-                event.preventDefault();
-                // these IDs from the previous steps
-                emailjs.sendForm('contact_service', 'contact_form', this)
-                    .then(() => {
-                        console.log('SUCCESS!');
-                    }, (error) => {
-                        console.log('FAILED...', error);
-                    });
-            });
+
+
+
+    //email js
+    (function () {
+  // Correctly pass the public key
+  emailjs.init("mqWImFyfIz-H8jZ7p");
+})();
+
+// Dropdown logic for closing menus (ensure these variables are defined elsewhere)
+document.addEventListener("click", (e) => {
+  if (
+    typeof isDesktop !== "undefined" &&
+    !isDesktop.matches &&
+    !e.target.closest(".dropdown-link") &&
+    !e.target.closest(".dropdown-menu")
+  ) {
+    dropdownMenus.forEach((menu) => hideDropdown(menu));
+    dropdownStates.forEach((state) => (state.isOpen = false));
+  }
+});
+
+// Form submission handler
+window.onload = function () {
+  document.getElementById("contact_form").addEventListener("submit", function (event) {
+    event.preventDefault();
+
+    // Use the correct Service ID and Template ID
+    emailjs
+      .sendForm("contact_service", "contact_form", this)
+      .then(
+        () => {
+          console.log("SUCCESS!");
+        },
+        (error) => {
+          console.log("FAILED...", error);
         }
+      );
+  });
+};
 });
             </script>
           </body>
