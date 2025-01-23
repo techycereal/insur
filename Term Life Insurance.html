@@ -181,9 +181,9 @@ document.addEventListener('click', (e) => {
 
 
     //email js
-    const EMAIL_JS_USER_ID = 'mqWImFyfIz-H8jZ7p'; // Replace with your EmailJS user ID
-const EMAIL_JS_SERVICE_ID = 'contact_form'; // Replace with your EmailJS service ID
-const EMAIL_JS_TEMPLATE_ID = 'template_r2hiv58'; // Replace with your EmailJS email template ID
+    const EMAIL_JS_USER_ID = 'mqWImFyfIz-H8jZ7p';
+const EMAIL_JS_SERVICE_ID = 'contact_form';
+const EMAIL_JS_TEMPLATE_ID = 'template_r2hiv58';
 
 emailjs.init(EMAIL_JS_USER_ID);
 
@@ -195,6 +195,8 @@ const messageInput = document.getElementById('message');
 
 // Form submission handler
 async function handleSubmit(event) {
+  event.preventDefault();
+
   // Basic validation
   if (!nameInput.value || !emailInput.value || !messageInput.value) {
     alert('Please fill out all fields');
@@ -209,7 +211,8 @@ async function handleSubmit(event) {
       {
         from_name: nameInput.value,
         from_email: emailInput.value,
-        message: messageInput.value
+        message: messageInput.value,
+        to_email: 'alexmilliken276@gmail.com' // Add your target email here
       }
     );
 
