@@ -212,7 +212,8 @@ async function handleSubmit(event) {
         from_name: nameInput.value,
         from_email: emailInput.value,
         message: messageInput.value,
-        to_email: 'alexmilliken276@gmail.com' // Add your target email here
+        to_email: 'alexmilliken276@gmail.com',
+        reply_to: emailInput.value
       }
     );
 
